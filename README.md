@@ -56,15 +56,21 @@ int main(int argc, char* argv[])
 {
 	using namespace utils;
 
-	rmemory_t* blc = nullptr;
-	utils::io::deserialize(&blc, "client.dat");
-	blc->read(client.m_name);
-	blc->read(client.m_nums);
-	blc->read(client.m_grade);
-	blc->read(client.m_age);
+	try {
 
-	blc->cleanup();
-	delete blc;
+		rmemory_t* blc = nullptr;
+		utils::io::deserialize(&blc, "client.dat");
+		blc->read(client.m_name);
+		blc->read(client.m_nums);
+		blc->read(client.m_grade);
+		blc->read(client.m_age);
+
+		blc->cleanup();
+		delete blc;
+
+	} catch (_STD exception& error) {
+		std::println(std::cout, "exception: {}", error.what());
+	}
 
 	return EXIT_SUCCESS;
 }
