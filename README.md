@@ -31,21 +31,17 @@ namespace
 int main(int argc, char* argv[])
 {
 	using namespace utils;
-	
-	size_t size = sizeof(uint16_t) * 0x4;
-	size += client.m_name.size();
-	size += client.m_nums.size();
 
-	wmemory_t mem = wmemory_t(size);
-	mem.write(client.m_name);
-	mem.write(client.m_nums);
+	wmemory_t* mem = new wmemory_t();
+	mem->write(client.m_name);
+	mem->write(client.m_nums);
+	mem->write(client.m_grade);
+	mem->write(client.m_age);
 
-	mem.write(client.m_grade);
-	mem.write(client.m_age);
+	utils::io::serialize(*mem, "client.dat");
 
-	utils::io::serialize(mem, "client.dat");
-
-	mem.cleanup();
+	mem->cleanup();
+	delete mem;
 
 	return EXIT_SUCCESS;
 }
